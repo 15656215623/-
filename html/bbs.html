@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>共享农场-论坛</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bbs.css" />
+</head>
+<style>
+    .table tr td {
+        border: 1px solid white;
+    }
+</style>
+
+<body>
+    <!-- 分类导航 -->
+    <ul class="nav nav-tabs">
+        <li class="active" onclick="querylist('蔬菜')"><a href="#">蔬菜</a></li>
+        <li><a href="#" onclick="querylist('水果')">水果</a></li>
+        <li><a href="#" onclick="querylist('土地')">土地</a></li>
+        <li><a href="#" onclick="querylist('食品安全')">食品安全</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      其他
+      </a>
+            <ul class="dropdown-menu">
+                <li onclick="querylist('认养体验')"><a href="#">认养体验</a></li>
+                <li onclick="querylist('城乡合作')"><a href="#">城乡合作</a></li>
+                <li onclick="querylist('供应信息')"><a href="#">供应信息</a></li>
+                <li onclick="querylist('农业快讯')"><a href="#">农业快讯</a></li>
+            </ul>
+        </li>
+    </ul>
+    <!-- 分类导航 -->
+    <!-- 一个图片 -->
+    <div class="alert alert-danger text-right" onclick="islogin()">发布帖子</div>
+    <!-- 一个图片 -->
+    <!-- 详情  左图+右标题+时间+回帖数目+账户名 -->
+    <div id="allpost">
+        <div class="container">
+            <div class="row" v-for="s in sites" @click="show_onepost(s.post_id)">
+                <template>
+           <div class="col-xs-6">
+              <img :src="s.post_img" class="post_img"/>
+           </div>
+            <div class="col-xs-6">
+            <div class="row dt">{{s.post_title}}</div>
+              <div class="row">
+                <div class="col-xs-6 h6">{{s.post_byname}}</div>
+              <div class="col-xs-6 h6">{{s.answer_num}} </div>
+            </div>
+            <div class="row h6">{{s.post_time}}</div>
+          </div>
+        </template>
+            </div>
+        </div>
+    </div>
+    <!--  -->
+</body>
+<script src="../script/jquery-1.10.2.js"></script>
+<script src="../script/bootstrap.js"></script>
+<script src="../script/vue.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="../script/bbs.js"></script>
+
+</html>

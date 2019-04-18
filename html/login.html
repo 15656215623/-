@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>共享农场-我的</title>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <script src="../script/api.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/my.css" />
+</head>
+
+<body>
+    <!-- logo -->
+    <div class="row">
+        <img src="../image/logo.png" class="mylogo" />
+    </div>
+    <!-- logo -->
+    <!--注册、登录  -->
+    <form>
+        <table class="table">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h1 onclick="blockornone('regedit_div')" id="t_reg" style="color:#1ba71b;">注册<h1>
+                    </div>
+               <div class="col-xs-6" >
+                 <h1 onclick="blockornone('login_div')"  id="t_log">登录</h1>
+                </div>
+            </div>
+            <tbody id="regedit_div">
+                <tr>
+                    <td>用户名</td>
+                    <td><input type="text" placeholder="输入用户名" id="rusername" /></td>
+                </tr>
+                <tr>
+                    <td>输入密码</td>
+                    <td><input type="password" id="rpassword" /></td>
+                </tr>
+                <tr>
+                    <td>再次输入密码</td>
+                    <td><input type="password" id="gpassword" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="button" value="注册" onclick="ajax_regedit(rusername.value,rpassword.value,gpassword.value)" /></td>
+                </tr>
+            </tbody>
+            <tbody id="login_div">
+                <tr>
+                    <td>用户名</td>
+                    <td><input type="text" placeholder="输入用户名" id="lusername" /></td>
+                </tr>
+                <tr>
+                    <td>密码</td>
+                    <td><input type="password" name="lpassword" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="button" value="登录" onclick="ajax_login(lusername.value,lpassword.value)" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <!--注册、登录  -->
+    <!-- 登录表单 -->
+
+    <body>
+
+        <script type="text/javascript" src="../script/lregedit.js"></script>
+
+</html>

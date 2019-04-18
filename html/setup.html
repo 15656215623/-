@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>我的-设置</title>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/vue.min.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/setup.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        .suhead {
+            background-color: #324c31;
+            height: 20%;
+            padding-top: 10%;
+            padding-bottom: 10%;
+            font-size: 24px;
+        }
+
+        #avatar {
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body onload="getcounter()">
+    <div class="row text-center btn-danger suhead">
+        我的中心-编辑资料
+    </div>
+    <table class="table h4" style="margin-top: 12%;">
+        <tr>
+            <td>账户信息</td>
+        </tr>
+        <tr>
+            <td class="pager" id="usercounter"></td>
+        </tr>
+        <tr>
+            <td>我的密码</td>
+        </tr>
+        <tr>
+            <td class="pager">
+                <button class="badge" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            修改密码
+          </button>
+            </td>
+        </tr>
+        <tr>
+            <td>我的头像</td>
+        </tr>
+        <tr>
+            <td class="pager">
+                <img src="" id="avatar" />
+                <input type="button" value="修改头像" onclick="showAction();" />
+            </td>
+        </tr>
+        <tr>
+            <td onclick="exited();" class="pager">退出</td>
+        </tr>
+    </table>
+
+    <!-- 模态框（修改密码  Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+                    <h4 class="modal-title" id="myModalLabel">
+					修改密码
+				</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="firstname" class="col-sm-2 control-label">请输入新的密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="newpassword" placeholder="请输入新的密码">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastname" class="col-sm-2 control-label">再次输入密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="agpassword" placeholder="再次输入密码">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="resetup(newpassword.value,agpassword.value)">
+					重置密码
+				</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+    <!-- 模态框（修改密码  Modal） -->
+
+    <body>
+
+</html>

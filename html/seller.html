@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>我的-商家中心</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/seller.css" />
+</head>
+
+<body>
+    <div id="seller">
+        <!-- 商家的Logo和名称 -->
+        <div class="container" style="background-color:#0091ea;color:#ffffff">
+            <div class="row" style="margin-top: 16%;margin-bottom: 3%;">
+                <div class="col-xs-6">
+                    <img src="" class="sellimg" id="slogo" />
+                </div>
+                <div class="col-xs-6 h4" id="sname">
+                </div>
+            </div>
+        </div>
+        <img src="../image/goods/sellerbg.PNG" style="width:100%" />
+        <!-- 退出商家中心，返回用户中心 -->
+        <button type="button" class="btn btn-danger" onclick="rcommon()">返回普通用户中心</button>
+        <!-- 退出商家中心，返回用户中心  -->
+</body>
+<!-- JavaScript 代码需要放在尾部（指定的HTML元素之后） -->
+<script src="../script/jquery-1.10.2.js"></script>
+<script src="../script/api.js"></script>
+<script src="../script/vue.js"></script>
+<script src="../script/bootstrap.js"></script>
+<script>
+    //显示数据
+    var purl = 'http://47.93.217.112:8080/jiekou';
+    var pp = 'http://192.168.0.106:8080/jiekou';
+    apiready = function() {
+            var name = $api.getStorage('username');
+            api.ajax({
+                url: purl + '/si.action',
+                method: 'post',
+                data: {
+                    values: {
+                        name: name
+                    }
+                }
+            }, function(ret, err) {
+                if (ret) {
+                    var sname = JSON.stringify(ret[0].seller_name);
+                    //去除""
+                    sname = sname.substring(1, sname.length - 1);
+                    //去除""
+                    var slogo = JSON.stringify(ret[0].seller_logo);
+                    //去除""
+                    slogo = slogo.substring(1, slogo.length - 1);
+                    //去除""
+                    $("#sname").html(sname);
+                    $("#slogo").attr("src", slogo);
+                    //并且把商品名称存储起来
+                    $api.setStorage('sname', sname);
+                    var na = $api.getStorage('sname');
+                    //并且把商品名称存储起来
+
+                }
+            });
+
+        }
+        //显示数据
+
+
+    function rcommon() {
+        api.closeWin();
+        api.openFrame({
+            name: 'my',
+            url: './my.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: api.winHeight - 70,
+            }
+        });
+    }
+</script>
+
+</html>

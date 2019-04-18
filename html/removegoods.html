@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+	<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+	<title>共享农场-商家版本-下架商品</title>
+	<script src="../script/jquery-1.10.2.js"></script>
+	<script src="../script/bootstrap.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+<style>
+	.hespan {
+		padding-top: 3%;
+		padding-bottom: 3%;
+		text-align: center;
+	}
+
+	.smallicon {
+		width: 17px;
+		height: 17px;
+	}
+
+	.mainimg {
+		width: 122px;
+		height: 75px;
+	}
+
+	.table tr td {
+		border: 1px solid white;
+	}
+
+	body {
+		background-color: #dddddd;
+	}
+</style>
+
+<body>
+	<!-- 返回的按钮 -->
+	<div class="row" style="background-color:#4d84c6;color:white;">
+		<div class="col-xs-4 hespan">返回</div>
+		<div class="col-xs-4 hespan">下架商品页面</div>
+		<div class="col-xs-4 hespan">编辑</div>
+	</div>
+	<br><br>
+	<!-- 下架的页面 -->
+	<ul id="allli">
+		<div class="container" style="background-color:white">
+			<table class="table">
+				<tr>
+					<td rowspan="2">
+						<li>
+							<img src="../image/icon/circle.png" class="smallicon" id="one" onclick="eq('one')" /></li>
+					</td>
+					<td rowspan="2"><img src="../image/soil.jpg" class="mainimg" /></td>
+					<td class="h5">红富士水果一件起批</td>
+				</tr>
+				<tr>
+					<td>￥69.12/套</td>
+				</tr>
+			</table>
+		</div>
+		<!-- 下架的页面 -->
+		<div class="container" style="background-color:white">
+			<table class="table">
+				<tr>
+					<td rowspan="2">
+						<li>
+							<img src="../image/icon/circle.png" class="smallicon" id="two" onclick="eq('two')" /></li>
+					</td>
+					<td rowspan="2"><img src="../image/soil.jpg" class="mainimg" /></td>
+					<td class="h5">新鲜的水果蔬菜幼苗</td>
+				</tr>
+		</div>
+		<tr>
+			<td>￥12.00/把</td>
+		</tr>
+		</table>
+		</div>
+		<!-- 下架的页面 -->
+		<div class="container" style="background-color:white">
+			<table class="table">
+				<tr>
+					<td rowspan="2">
+						<li>
+							<img src="../image/icon/circle.png" class="smallicon" id="three" onclick="eq('three')" />
+						</li>
+					</td>
+					<td rowspan="2"><img src="../image/soil.jpg" class="mainimg" /></td>
+					<td class="h5">东北黑土地，优质大米种植</td>
+				</tr>
+		</div>
+		<tr>
+			<td>￥999.00/年</td>
+		</tr>
+		</table>
+		</div>
+		<!-- 底部固定住 -->
+		<table class="table">
+			<tr>
+				<td>
+					<img src="../image/icon/circle.png" class="smallicon" id="all" onclick="allcheck()" />
+					<button type="button" class="btn btn-danger" onclick="allcheck()">全选</button>
+				</td>
+				<td id="allnum"></td>
+				<td>下架</td>
+			</tr>
+		</table>
+		<!-- 底部固定住 -->
+	</ul>
+</body>
+<script>
+	apiready = function() {
+		//var name=$api.pageParam.name;
+	}
+	var ncheck = "../image/icon/circle.png";
+	var ycheck = "../image/icon/checkedcircle.png";
+
+	function eq(c) {
+		var status = $("#" + c)[0].src;
+		var fg = status.indexOf("/icon/circle.png");
+		if (fg == -1) {
+			$("#" + c).attr("src", ncheck);
+			$("#all").attr("src", ncheck);
+		} else {
+			$("#" + c).attr("src", ycheck);
+			checkeds();
+		}
+		//每次都统计一下选中的商品的个数
+		var num = checkednum();
+		$("#allnum").html("总计" + num + "件商品");
+	}
+	//点击两次，我们判断如果之前是全选的话，这次就全不选
+	function allcheck() {
+		var ims = $("#allli li img"); //获取所有的li元素
+		var num = checkednum();
+		if (num == ims.size()) { //全部被选中
+			allnocheck();
+		} else {
+			allchecked();
+		}
+		//每次都统计一下选中的商品的个数
+		var num = checkednum();
+		$("#allnum").html("总计" + num + "件商品");
+	}
+	//如果所有的选项选中了，那么全选按钮也选中
+	function checkeds() {
+		var ims = $("#allli li img"); //获取所有的li元素
+		var num = checkednum();
+		if (num == ims.size()) { //全部被选中
+			$("#all").attr("src", ycheck);
+		} else {
+			$("#all").attr("src", ncheck);
+		}
+	}
+	//全不选
+	function allnocheck() {
+		var ims = $("#allli li img"); //获取所有的li元素
+		for (var i = 0; i < ims.size(); i++) {
+			$(ims[i]).attr("src", ncheck);
+			$("#all").attr("src", ncheck);
+		}
+	}
+	//全选
+	function allchecked() {
+		//否则的话就是全选
+		var ims = $("#allli li img"); //获取所有的li元素
+		for (var i = 0; i < ims.size(); i++) {
+			$(ims[i]).attr("src", ycheck);
+			$("#all").attr("src", ycheck);
+		}
+	}
+	//被选中的个数
+	function checkednum() {
+		var ims = $("#allli li img"); //获取所有的li元素
+		var num = 0;
+		for (var i = 0; i < ims.size(); i++) {
+			var fg = $(ims[i])[0].src.indexOf("/icon/checkedcircle.png");
+			if (fg != -1) { //被选中
+				num++;
+			}
+		}
+		return num;
+	}
+</script>
+
+</html>

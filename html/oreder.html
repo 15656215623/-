@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>共享农场-商城</title>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/vue.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <script src="../script/api.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+
+<body>
+    <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="comeBack()">返回</a><a href="#">确认订单</a></li>
+    </ul>
+    <table class="table">
+        <tr class="active">
+            <td>周博文</td>
+            <td>17756208536</td>
+        </tr>
+        <tr class="active">
+            <td colspan="2">安徽省合肥市蜀山区</td>
+        </tr>
+    </table>
+    <table class="table" id="orders">
+        <tr>
+            <td colspan="2">{{sellername}}</td>
+        </tr>
+        <tr>
+            <td rowspan="2" style="width:50%"><img :src="goodimg" class="img-rounded" style="width:100%"></td>
+            <td>{{goodname}}</td>
+        </tr>
+        <tr>
+            <td>小计格: ￥ {{totalprice}}</td>
+            <td>数量: {{goodnum}}</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default">应付款: {{goodnum}}</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">提交订单</button>
+                </div>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+    <!-- 模态框 -->
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+                    <h4 class="modal-title" id="myModalLabel">
+					选择支付方式
+				</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-4"><img src="../image/icon/wxpay.png" /></div>
+                        <div class="col-xs-4">微信</div>
+                        <div class="col-xs-4"><img src="../image/icon/circle.png" style="width:20px;height:20px" id="wx" onclick="selected('wx');" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4"> <img src="../image/icon/zfbpay.png" /></div>
+                        <div class="col-xs-4">支付宝</div>
+                        <div class="col-xs-4"><img src="../image/icon/circle.png" style="width:20px;height:20px;" id="zfb" onclick="selected('zfb');" /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+                    <button type="button" class="btn btn-primary" onclick="pay()">
+					确认付款
+				</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+    <!-- 模态框 -->
+</body>
+
+<script>
+    var purl = 'http://47.93.217.112:8080/jiekou';
+    var pp = 'http://192.168.0.106:8080/jiekou';
+    var goodnum;
+    var totalprice;
+    var goodname;
+    var goodimg;
+    var sellername;
+    //返回上一页
+    //返回按钮
+    function comeBack() {
+        api.historyBack({}, function(ret, err) {
+            if (!ret.status) {
+                api.closeWin();
+            }
+        });
+    }
+    //返回上一页
+    apiready = function() {
+        //把上一个页面的数据显示在这个页面上面、
+        goodnum = api.pageParam.goodnum;
+        totalprice = api.pageParam.totalprice;
+        goodname = api.pageParam.goodname;
+        goodimg = api.pageParam.goodimg;
+        sellername = api.pageParam.sellername;
+        //把上一个页面的数据显示在这个页面上面
+        //vue代码
+        new Vue({
+                el: '#orders',
+                data: {
+                    goodnum: goodnum,
+                    totalprice: totalprice,
+                    goodname: goodname,
+                    goodimg: goodimg,
+                    sellername: sellername
+                }
+            })
+            //vue代码
+    }
+
+    //付款
+    function pay() {
+        api.toast({
+            msg: '支付成功',
+            duration: 2000,
+            location: 'bottom'
+        });
+        //跳转页面
+        api.closeWin({
+            name: 'bgoods'
+        });
+
+        api.openFrame({
+            name: 'store',
+            url: './store.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: api.winHeight - 70
+            }
+        });
+        //跳转页面
+    }
+    //付款
+    //支付模块
+    var ncheck = "../image/icon/circle.png";
+    var ycheck = "../image/icon/checkedcircle.png";
+
+    function selected(i) {
+        var status = $("#" + i)[0].src;
+        var fg = status.indexOf("/icon/circle.png"); //未被勾选
+        if (fg == -1) {
+            $("#" + i).attr("src", ncheck);
+        } else {
+            $("#" + i).attr("src", ycheck);
+        }
+    }
+    //支付模块
+</script>
+
+</html>

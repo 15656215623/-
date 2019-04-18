@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>共享农场-论坛发布帖子</title>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bbs.css" />
+</head>
+<style>
+    #avatar {
+        width: 150px;
+        height: 150px;
+    }
+</style>
+
+<body>
+    <!-- 在进入这个页面之前，首先判断有没有登录，只有登录的人才可以发布帖子 -->
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">发布帖子</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input type="text" class="form-control" id="titlename" placeholder="请输入标题">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <textarea class="form-control" rows="3" placeholder="请输入内容" id="content"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <img src="../image/download.png" class="img-rounded" id="avatar" />
+                    </div>
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-success" onclick="showAction();" style="margin-top:100px">上传图片</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">帖子分类</div>
+                    <div class="col-xs-6">
+                        <select id="slt" onchange="gradeChange(this.options[this.options.selectedIndex].text)">
+  <option value="0">蔬菜</option>
+  <option value="1">水果</option>
+  <option value="2">土地</option>
+  <option value="3">食品安全</option>
+	  <option value="4">认养体验</option>
+  <option value="5">城乡合作</option>
+  <option value="6">供应信息</option>
+  <option value="7">农业快讯</option>
+</select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-primary" onclick="sendpost();">发布帖子</button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button type="button" class="btn btn-primary" onclick="rtn();">返回论坛</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--   详情  左图+右标题+时间+回帖数目+账户名-->
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+    //返回论坛
+    function rtn() {
+        api.closeWin({
+            name: 'sendpost'
+        });
+
+        api.openFrame({
+            name: 'bbs',
+            url: './bbs.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: api.winHeight - 70
+            },
+        });
+
+
+    }
+    //返回论坛
+
+    //调用手机相册和相机
+    var purl = 'http://47.93.217.112:8080/jiekou';
+    var pp = 'http://192.168.0.107:8080/jiekou';
+    var imgSrc = "";
+    var kinds = "";
+
+    function showAction() {
+        api.actionSheet({
+            title: '上传头像',
+            cancelTitle: '取消',
+            buttons: ['拍照', '从手机相册选择']
+        }, function(ret, err) {
+            if (ret) {
+                getPicture(ret.buttonIndex);
+            }
+        });
+    }
+    //获取相机还是相册
+    function getPicture(sourceType) {
+        if (sourceType == 1) { // 拍照
+            //获取一张图片
+            api.getPicture({
+                sourceType: 'camera', //拍照
+                encodingType: 'png',
+                mediaValue: 'pic',
+                allowEdit: false,
+                //destinationType: 'base64',  //返回base64地址
+                quality: 90,
+                saveToPhotoAlbum: true
+            }, function(ret, err) {
+                //var imgSrc = ret.base64Data;  如果是base64，要用这个属性获取地址
+                // 获取拍照数据并处理
+                if (ret) {
+                    imgSrc = ret.data;
+                    if (imgSrc != "") {
+                        var ele = $api.dom('#avatar');
+                        $api.attr(ele, 'src', imgSrc);
+                        //最后一步
+
+                        //最后一步
+                    }
+                }
+            });
+        } else if (sourceType == 2) { // 从相册中选择
+            api.getPicture({
+                sourceType: 'album', //从相册中选择
+                encodingType: 'jpg',
+                mediaValue: 'pic',
+                allowEdit: false,
+                //destinationType: 'base64',  //返回base64地址
+                quality: 90,
+                saveToPhotoAlbum: true
+            }, function(ret, err) {
+                // 获取拍照数据并处理
+                //var imgSrc = ret.base64Data;  如果是base64，要用这个属性获取地址
+                if (ret) {
+                    imgSrc = ret.data;
+                    if (imgSrc != "") {
+                        var ele = $api.dom('#avatar');
+                        $api.attr(ele, 'src', imgSrc);
+                        //最后一步
+
+                        //最后一步
+                    }
+                }
+            });
+        }
+
+    }
+
+    //调用手机相册和相机
+    //发布帖子
+    function sendpost() {
+        //在这之前判断标题和内容不能为空
+        var user = $api.getStorage('username');
+        var tname = $("#titlename").val();
+        var cent = $("#content").val();
+        if (tname != null && cent != null) {
+            //ajax
+            api.ajax({
+                url: purl + '/postdao.action',
+                method: 'post',
+                data: {
+                    values: {
+                        post_byname: user,
+                        post_title: tname,
+                        post_content: cent,
+                        post_kinds: kinds
+                    },
+                    files: {
+                        file: imgSrc
+                    }
+                }
+            }, function(ret, err) {
+                if (ret) {
+                    api.toast({
+                        msg: '发布成功',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
+            });
+
+            //ajax
+        }
+
+    }
+    //选择器
+    function gradeChange(tx) {
+        kinds = tx;
+    }
+</script>
+
+</html>

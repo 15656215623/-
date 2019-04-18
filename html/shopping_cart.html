@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+	<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+	<title>共享农场-商家版本-下架商品</title>
+	<script src="../script/jquery-1.10.2.js"></script>
+	<script src="../script/bootstrap.js"></script>
+	<script src="../script/api.js"></script>
+	<script src="../script/vue.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+<style>
+	.hespan {
+		padding-top: 3%;
+		padding-bottom: 3%;
+		text-align: center;
+	}
+
+	.smallicon {
+		width: 17px;
+		height: 17px;
+	}
+
+	.mainimg {
+		width: 122px;
+		height: 75px;
+	}
+
+	.table tr td {
+		border: 1px solid white;
+	}
+
+	body {
+		background-color: #dddddd;
+	}
+</style>
+
+<body>
+	<!-- 返回的按钮 -->
+	<div class="row" style="background-color:#4d84c6;color:white;">
+		<div class="col-xs-4 hespan">返回</div>
+		<div class="col-xs-4 hespan">下架商品页面</div>
+		<div class="col-xs-4 hespan">编辑</div>
+	</div>
+	<br><br>
+	<!-- 下架的页面 -->
+	<ul id="allli">
+		<div class="container" style="background-color:white" v-for="(item,index) in sites">
+			<table class="table">
+				<tr>
+					<td colspan="2" class="h4">{{item.sellername}}</td>
+				</tr>
+				<tr>
+					<td rowspan="2">
+						<li>
+							<img :id="step(index)" src="../image/icon/circle.png" class="smallicon" @click="eq(index)" /></li>
+					</td>
+					<td rowspan="2">
+						<img :src="item.goodimg" class="mainimg" />
+					</td>
+					<td class="h5">{{item.goodname}}</td>
+				</tr>
+				<tr>
+					<td>数量 {{item.goodnum}}</td>
+				</tr>
+				<tr>
+					<td><img src="../image/goods/price.png" style="width:30px;height:30px" />{{item.totalprice}} </td>
+				</tr>
+			</table>
+		</div>
+		<!-- 下架的页面 -->
+
+		<!-- 底部固定住 -->
+		<table class="table">
+			<tr>
+				<td>
+					<img src="../image/icon/circle.png" class="smallicon" id="all" onclick="allcheck()" />
+					<button type="button" class="btn btn-danger" onclick="allcheck()">全选</button>
+				</td>
+				<td id="allnum"></td>
+				<td onclick="pay();">购买</td>
+			</tr>
+		</table>
+		<!-- 底部固定住 -->
+	</ul>
+</body>
+<script>
+	function pay() {
+		api.toast({
+			msg: '支付成功',
+			duration: 2000,
+			location: 'bottom'
+		});
+		//跳转页面
+		api.openFrame({
+			name: 'store',
+			url: './store.html',
+			rect: {
+				x: 0,
+				y: 0,
+				w: 'auto',
+				h: api.winHeight - 70
+			}
+		});
+		//跳转页面
+	}
+	//下拉刷新
+	//该方法用来下拉刷新
+	function refreshList() {
+		api.setRefreshHeaderInfo({
+			visible: true, //是否可见，若设置为false，下拉区域不能隐藏且刷新界面为黑色，什么内容也看不到。
+			bgColor: '#ccc', //背景色
+			textColor: '#fff', //文本颜色
+			textDown: '下拉刷新...', //下拉文字描述，默认值：下拉可以刷新
+			textUp: '松开刷新...', //松开时文字描述，默认值：松开可以刷新
+			textLoading: '加载中..', //加载状态文字描述
+			//textTime:'',，//更新时间文字描述,默认格式为：最后更新+日期时间
+			showTime: true //是否需显示更新时间
+		}, function(ret, err) {
+			//alert("下拉刷新成功");
+			api.refreshHeaderLoadDone(); //恢复默认状态
+
+			//重新加载当前页面
+			window.location.reload();
+		});
+	}
+	//下拉刷新
+	//购物车功能
+	var purl = 'http://47.93.217.112:8080/jiekou';
+	var pp = 'http://192.168.0.106:8080/jiekou';
+	//购物车功能
+	var name = $api.getStorage('username');
+	apiready = function() {
+			refreshList();
+			api.ajax({
+				url: purl + '/ps.action',
+				method: 'post',
+				data: {
+					values: {
+						countername: name
+					}
+				}
+			}, function(ret, err) {
+				if (ret) {
+					//显示
+					new Vue({
+						el: '#allli',
+						data: {
+							sites: ret
+						},
+						methods: {
+							step: function(i) {
+								return "step" + i
+							},
+							eq: function(c) {
+								var status = $("#" + 'step' + c)[0].src;
+								var fg = status.indexOf("/icon/circle.png");
+								if (fg == -1) {
+									$("#" + 'step' + c).attr("src", ncheck);
+									$("#all").attr("src", ncheck);
+								} else {
+									$("#" + 'step' + c).attr("src", ycheck);
+									checkeds();
+								}
+								//每次都统计一下选中的商品的个数
+								var num = checkednum();
+								$("#allnum").html("总计" + num + "件商品");
+							}
+						}
+					});
+					//显示new Vue({})
+				}
+			});
+
+		}
+		//显示在页面上
+
+	//显示在页面上
+	var ncheck = "../image/icon/circle.png";
+	var ycheck = "../image/icon/checkedcircle.png";
+	//点击两次，我们判断如果之前是全选的话，这次就全不选
+	function allcheck() {
+		var ims = $("#allli li img"); //获取所有的li元素
+		var num = checkednum();
+		if (num == ims.size()) { //全部被选中
+			allnocheck();
+		} else {
+			allchecked();
+		}
+		//每次都统计一下选中的商品的个数
+		var num = checkednum();
+		$("#allnum").html("总计" + num + "件商品");
+	}
+	//如果所有的选项选中了，那么全选按钮也选中
+	function checkeds() {
+		var ims = $("#allli li img"); //获取所有的li元素
+		var num = checkednum();
+		if (num == ims.size()) { //全部被选中
+			$("#all").attr("src", ycheck);
+		} else {
+			$("#all").attr("src", ncheck);
+		}
+	}
+	//全不选
+	function allnocheck() {
+		var ims = $("#allli li img"); //获取所有的li元素
+		for (var i = 0; i < ims.size(); i++) {
+			$(ims[i]).attr("src", ncheck);
+			$("#all").attr("src", ncheck);
+		}
+	}
+	//全选
+	function allchecked() {
+		//否则的话就是全选
+		var ims = $("#allli li img"); //获取所有的li元素
+		for (var i = 0; i < ims.size(); i++) {
+			$(ims[i]).attr("src", ycheck);
+			$("#all").attr("src", ycheck);
+		}
+	}
+	//被选中的个数
+	function checkednum() {
+		var ims = $("#allli li img"); //获取所有的li元素
+		var num = 0;
+		for (var i = 0; i < ims.size(); i++) {
+			var fg = $(ims[i])[0].src.indexOf("/icon/checkedcircle.png");
+			if (fg != -1) { //被选中
+				num++;
+			}
+		}
+		return num;
+	}
+</script>
+
+</html>

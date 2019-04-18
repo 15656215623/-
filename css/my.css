@@ -1,0 +1,50 @@
+/*这个是Login.html里面的内容*/
+.mylogo{
+height:100%;
+width:100%;
+}
+#login_div{
+position: absolute;
+width: 100%;
+display: none;
+}
+#regedit_di{
+position: absolute;
+width: 100%;
+}
+/*my.html里面的内容*/
+#myhead{
+  background-color: #324c31;
+  color:white;
+  height: 30%;
+  text-align: center;
+  padding-top: 12%;
+  padding-bottom:12%;
+  display: block;
+}
+.uplogo{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-left: 30%;
+}
+.icon{
+  width:25px;
+  height: 25px;
+}
+#seller{
+width:100%;
+height: 100%;
+position: absolute;
+margin: 0;
+}
+#buyer{
+  width:100%;
+  height: 100%;
+  position: absolute;
+  margin: 0;
+}

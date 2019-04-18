@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>共享农场-商城</title>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+
+<body>
+    <!--商城的头部--->
+    <div class="container-fluid  shead">共享农场商城页面</div>
+    <!--商城的头部--->
+    <!--输入搜索框--->
+    <div class="container">
+        <div class="row">
+            <form role="form">
+                <div class="col-xs-9"><input type="text" class="form-control" id="search_in" placeholder="请输入要搜索的内容"></div>
+                <div class="col-xs-3"><input type="submit" class="btn" value="" /></div>
+            </form>
+        </div>
+        <div>
+            <!--输入搜索框--->
+            <!--轮播图--->
+            <div class="row">
+                <div id="lbt"></div>
+            </div>
+            <!--轮播图--->
+            <!--三大模块-->
+            <div class="row">
+                <table class="table" style="margin-top:65%;">
+                    <tr>
+                        <td onclick="querylist('五谷杂粮')"><img src="../image/icon/tudi.png" class="small_icon" /></td>
+                        <td onclick="querylist('水果')"><img src="../image/icon/tree.png" class="small_icon" /></td>
+                        <td onclick="querylist('蔬菜')"><img src="../image/icon/shucai.png" class="small_icon" /></td>
+                        <td onclick="zhibo()"><img src="../image/icon/zb.png" class="small_icon" /></td>
+                    </tr>
+                    <tr>
+                        <td onclick="querylist('五谷杂粮')">五谷杂粮</td>
+                        <td onclick="querylist('水果')">水果订购</td>
+                        <td onclick="querylist('蔬菜')">蔬菜订购</td>
+                        <td onclick="zhibo()">直播间</td>
+                    </tr>
+                </table>
+            </div>
+            <!--三大模块-->
+            <!-- 底部图片 -->
+            <div class="row">
+                <img src="../image/bottom_logo.jpg" class="commons" />
+                <img src="../image/bottom_logo1.jpg" class="commons" />
+            </div>
+            <!-- 底部图片 -->
+</body>
+<link rel="stylesheet" type="text/css" href="../css/store.css" />
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/lbt.js"></script>
+<script>
+    function zhibo() {
+        api.closeWin({
+            name: 'index'
+        });
+
+        api.openWin({
+            name: 'zhibo',
+            url: './zhibo.html',
+        });
+
+    }
+    //初始化
+    function querylist(kk) {
+        api.openWin({
+            name: 'bgoods',
+            url: './bgoods.html',
+            pageParam: {
+                name: kk
+            }
+        });
+
+    }
+</script>
+
+</html>

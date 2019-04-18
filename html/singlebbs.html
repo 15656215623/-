@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>共享农场-论坛帖子详情页</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        .table tr td {
+            border: 1px solid white;
+        }
+
+        .uplogo {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-left: 2%;
+        }
+
+        .post_img {
+            position: relative;
+            margin-left: 2%;
+            width: 96%;
+            height: 50%;
+        }
+
+        #pid {
+            display: none;
+        }
+    </style>
+
+    <body>
+        <ul class="breadcrumb">
+            <li><a href="#" onclick="rtn()">返回</a></li>
+            <li><a href="#">共享农场论坛</a></li>
+            <li><a href="#">水果</a></li>
+            <li class="active">帖子详情页面</li>
+        </ul>
+        <!-- 发帖 -->
+        <div id="mpost">
+            <div class="container" v-for="s in sites">
+                <template>
+      <div class="row text-center h3"></div>
+      <div class="row h5">
+      <span id="pid">{{s.post_id}}</span>
+      <span id="pname">{{s.post_byname}}</span>
+      <span>回帖数&nbsp;&nbsp;{{s.answer_num}}</span>
+      </div>
+      <div class="row h5">发布时间&nbsp;&nbsp;{{s.post_time}} </div>
+      <div class="row h5">&nbsp;&nbsp;&nbsp;&nbsp;{{s.post_content}}</div>
+      <div class="row"><img :src="s.post_img" class="post_img"/></div>
+    </template>
+            </div>
+        </div>
+        <!-- 发帖 -->
+        <!---评论区------>
+        <table class='table' id="details">
+            <caption>回帖层</caption>
+            <tbody v-for="s in sites">
+                <div>
+                    <tr class='success'>
+                        <td colspan='2'> {{s.byanswer_content}}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan='3'><img :src="s.userlogo" class="uplogo" /></td>
+                        <td>用户名&nbsp;&nbsp;{{s.answer_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{s.answer_content}}</td>
+                    </tr>
+                    <tr>
+                        <td> 回复时间&nbsp;&nbsp;{{s.answer_time}}</td>
+                    </tr>
+                    <tr>
+                        <td @click="replayt(s.answer_name,s.answer_content);">回复他</td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+        <!---评论区------>
+        <!---写评论------>
+        <form role="form">
+            <div class="form-group">
+                <label for="name">写评论</label>
+                <input type="text" id="byanswer_content" style="display:none;" />
+                <textarea rows="4" cols="12">
+
+    </textarea>
+                <input type="" class="form-control" placeholder="写下您的评论...." id="content">
+                <input type="button" value="提交" onclick="writepl(content.value);" />
+            </div>
+        </form>
+    </body>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <script src="../script/vue.js"></script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/singlebbs.js"></script>
+
+</html>

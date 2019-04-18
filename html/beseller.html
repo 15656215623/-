@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+	<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+	<title>共享农场-我要开店</title>
+	<script src="../script/jquery-1.10.2.js"></script>
+	<script src="../script/bootstrap.js"></script>
+	<script src="../script/beseller.js"></script>
+	<script src="../script/api.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+<style>
+	#step1 {
+		display: block;
+	}
+
+	#step2,
+	#step3,
+	#step4,
+	#step5 {
+		display: none;
+	}
+
+	#step1,
+	#step2,
+	#step3,
+	#step4,
+	#step5 {
+		position: absolute;
+		width: 96%;
+		height: 40%;
+		left: 2%;
+		top: 43%;
+	}
+
+	.inp {
+		width: 100%;
+		height: 50px;
+		border: 1px solid #cccccc;
+		font-size: 16px;
+		margin-top: 6%;
+	}
+
+	.poster {
+		width: 100%;
+		height: 40%;
+		position: relative;
+	}
+
+	#avatar {
+		width: 150px;
+		height: 150px;
+	}
+
+	#dispe {
+		width: 80%;
+		height: 30%;
+		border: 1px solid #cccccc;
+	}
+</style>
+
+<body>
+	<div class="row">
+		<img src="../image/ruzhu.PNG" class="poster" />
+	</div>
+	<!-- 下一步，下一步 -->
+	<div id="step1">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title">商铺名称</h3>
+			</div>
+			<div class="panel-body">
+				<input type="text" placeholder="请输入商铺名称" class="inp" id="name" /><br><br>
+				<button type="button" class="btn btn-success" onclick="getnext('step2')">下一步</button>
+			</div>
+		</div>
+	</div>
+	<div id="step2">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">手机号码</h3>
+			</div>
+			<div class="panel-body">
+				<input type="text" placeholder="手机号码" class="inp" id="tell" /><br><br>
+				<button type="button" class="btn btn-primary" onclick="getnext('step1')">上一步</button>
+				<button type="button" class="btn btn-success" onclick="getnext('step3')">下一步</button>
+			</div>
+		</div>
+	</div>
+	<!-- 下一步，下一步 -->
+	<div id="step3">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">实体店地址</h3>
+			</div>
+			<div class="panel-body">
+				<input type="text" placeholder="地址信息" id="address" class="inp" />
+				<input type="button" value="选择地址" onclick="fnopen()" class="inp" /><br><br>
+				<button type="button" class="btn btn-primary" onclick="getnext('step2')">上一步</button>
+				<button type="button" class="btn btn-success" onclick="getnext('step4')">下一步</button>
+			</div>
+		</div>
+	</div>
+	<!-- 下一步，下一步 -->
+	<div id="step4">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">店铺介绍</h3>
+			</div>
+			<div class="panel-body">
+				<textarea id="dispe" placeholder="让顾客更了解你的商铺....">
+	</textarea><br><br>
+				<button type="button" class="btn btn-primary" onclick="getnext('step3')">上一步</button>
+				<button type="button" class="btn btn-success" onclick="getnext('step5')">下一步</button>
+			</div>
+		</div>
+	</div>
+	<!-- 下一步，下一步 -->
+	<div id="step5">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">店铺图标</h3>
+			</div>
+			<div class="panel-body">
+				<img src="../image/file.png" onclick="showAction();" id="avatar" />
+				<br><br>
+				<button type="button" class="btn btn-primary" onclick="getnext('step4')">上一步</button>
+				<button type="button" class="btn btn-primary" onclick="setshop()">我要开店</button>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	function getnext(i) {
+		var sz = new Array("step1", "step2", "step3", "step4", "step5");
+		for (var j = 0; j < sz.length; j++) {
+			if (i == sz[j]) {
+				document.getElementById(i).style.display = "block";
+			} else {
+				document.getElementById(sz[j]).style.display = "none";
+			}
+		}
+	}
+</script>
+
+</html>

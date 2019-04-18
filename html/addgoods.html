@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+  <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+	<title>共享农场-商家版本-宝贝上架</title>
+  <script src="../script/jquery-1.10.2.js"></script>
+<script src="../script/bootstrap.js"></script>
+<script src="../script/seller.js"></script>
+<script src="../script/api.js"></script>
+<link rel="stylesheet" href="../css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+	<style>
+#step1{
+display:block;
+}
+#step2,#step3,#step4{
+  display: none;
+}
+#step1,#step2,#step3,#step4{
+	   width: 95%;
+	    height: 40%;
+			position: absolute;
+      left: 2%;
+	    top: 60%;
+			bottom: 5%;
+}
+.inp{
+	width: 100%;
+	height: 50px;
+	border: 1px solid #cccccc;
+	font-size: 16px;
+	margin-top: 6%;
+}
+ul li{
+				float:left;
+				margin-left:3%;
+        padding-top:2%;
+				font-size: 12px;
+			}
+			#uli{
+			  width:100%;
+				height:60px;
+				background-color:#337ab7;
+				color:#ffffff;
+				margin-top:2%;
+				margin-left:-2%;
+				display: none;
+			}
+</style>
+<body>
+	<!-- 海报 -->
+<img src="../image/goods/seller.PNG" style="width:100%;height:50%;"/>
+	<!-- 海报 -->
+<!-- 下一步，下一步 -->
+<div id="step1" >
+  <div class="panel panel-success">
+  	<div class="panel-heading">
+  		<h3 class="panel-title">宝贝名称</h3>
+  	</div>
+  	<div class="panel-body">
+      <input type="text" placeholder="请输入宝贝名称" class="inp" id="name" /><br><br>
+      <button type="button" class="btn btn-success" onclick="getnext('step2')" >下一步</button>
+  	</div>
+  </div>
+</div>
+<div id="step2">
+  <div class="panel panel-info">
+	<div class="panel-heading">
+    	<h3 class="panel-title">价格</h3>
+	</div>
+	<div class="panel-body">
+		<div class="row">
+<div class="col-xs-6">
+	  <input type="text" placeholder="单价" class="inp" id="price"/>
+</div>
+<div class="col-xs-6">
+<input type="text" placeholder="规格，如斤、个、亩" class="inp" id="gg" name="good_gg"/>
+</div>
+		</div>
+
+		<br><br>
+		<button type="button" class="btn btn-primary" onclick="getnext('step1')">上一步</button>
+        <button type="button" class="btn btn-success" onclick="getnext('step3')">下一步</button>
+	</div>
+</div>
+</div>
+<!-- 下一步，下一步 -->
+<div id="step3">
+	 <div class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">宝贝分类</h3>
+	</div>
+	<div class="panel-body">
+   <div class="container" >
+<button id="fat-btn" class="btn btn-primary"  type="button" onclick="show();">请选择种类</button>
+<span id="tresult"></span>
+<ul style="list-style:none;" id="uli">
+	<li>五谷杂粮</li>
+	<li>水产类</li>
+	<li>土地</li>
+	<li>蔬菜</li>
+	<li>水果</li>
+	<li>花生坚果类</li>
+	<li>茶树类</li>
+	<li>鲜花类</li>
+	<li>其他</li>
+	<li></li>
+</ul>
+</div>
+<br><br>
+<button type="button" class="btn btn-primary" onclick="getnext('step2')">上一步</button>
+		<button type="button" class="btn btn-success" onclick="getnext('step4')">下一步</button>
+   </div>
+
+	</div>
+</div>
+</div>
+<!-- 下一步，下一步 -->
+<div id="step4">
+	 <div class="panel panel-info">
+	<div class="panel-heading">
+		<h3 class="panel-title">上传宝贝图片</h3>
+	</div>
+	<div class="panel-body">
+      <button onclick="sannerWay();">上传宝贝图片</button><br><br>
+  <button type="button" class="btn btn-primary" onclick="getnext('step3')">上一步</button>
+  <button type="button" class="btn btn-primary" onclick="submits()">宝贝上架</button>
+	</div>
+</div>
+</div>
+</form>
+</body>
+</html>

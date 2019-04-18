@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>共享农场-我的</title>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/vue.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <script src="../script/commondiv.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/my.css" />
+</head>
+
+<body>
+    <!-- 我是卖家 -->
+    <!-- 我是买家 -->
+    <div id="buyer">
+        <!-- 如果登录就显示用户名和头像，如果没有登录的话，就显示登录/注册享受更多特权 -->
+        <!--背景颜色是墨绿色，提示登录以后才会享受特权  -->
+        <div id="app">
+            <div class="row text-center" id="pcenter">
+                <ul class="list-group" v-for="s in sites">
+                    <li class="list-group-item" style="background-color: red;">
+                        <span class="badge" onclick="api.openWin({
+         name: 'setup',
+         url: './setup.html'
+     });">设置</span>
+                        <img :src="s.userlogo" id="youlogo" class="uplogo" />
+                    </li>
+                    <li class="list-group-item" onclick="beseller()">我要成为商家</li>
+                    <li class="list-group-item" id="showname"> 用户名 {{s.username}}</li>
+                </ul>
+            </div>
+            <div class="container-fluid">
+                <div class="row" id="myhead">
+                    <h4 onclick="rlogin()">注册/登录之后可享受更多特权<h4>
+     </div>
+  </div>
+      <!-- 如果是登录的状态进入 个人中心  重置密码  上传头像 -->
+    <!-- 如果登录就显示用户名和头像，如果没有登录的话，就显示登录/注册享受更多特权 -->
+    <!-- 商城订单 待付款   待发货     -->
+
+    <!-- 论坛消息管理 我发布的帖子   我回复的帖子  消息 -->
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+      <img src="../image/icon/sczx.png" class="icon"/>论坛管理
+      </div>
+      <div class="panel-body">
+        <div class="row">
+<div class="col-xs-6  h6">
+  <img src="../image/icon/mypost.png" class="icon"/>
+  <span onclick="islogin('fpost');">我发布的帖子</span></div>
+      </div>
+    </div>
+        <!-- 论坛消息管理 我发布的帖子   我回复的帖子  消息 -->
+          </div>
+    <body>
+</html>

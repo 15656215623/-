@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>我的-商家中心-商家信息页面</title>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/vue.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+<style>
+    table tr td {
+        border: 1px solid #4a6394;
+        white-space: nowrap;
+        overflow: hidden;
+        /*超出隐藏*/
+        text-overflow: ellipsis;
+        /*隐藏的字符用省略号表示*/
+    }
+
+    #tab {
+        margin-top: 10%;
+        background-color: #4a6394;
+        color: #c9f5ff;
+        text-align: center;
+        width: 90%;
+        margin-left: 5%;
+    }
+</style>
+
+<body>
+    <!-- 宣传海报 -->
+    <div class="row">
+        <img src="../image/goods/infos.PNG" style="width:100%;" />
+    </div>
+    <!-- 宣传海报 -->
+    <!--  1/2浏览格式-->
+    <table class="table" id="tab">
+        <tr>
+            <td class="h4">店名</td>
+            <td class="h4">{{sname}}</td>
+        </tr>
+        <tr>
+            <td class="h4">店主</td>
+            <td class="h4">{{name}}</td>
+        </tr>
+        <tr>
+            <td class="h4">联系方式</td>
+            <td class="h4">{{tell}}</td>
+        </tr>
+        <tr>
+            <td class="h4">地址</td>
+            <td class="h4">{{address}}</td>
+        </tr>
+        <tr>
+            <td class="h4">店铺描述</td>
+            <td class="h4" rowspan="3">
+                <textarea cols="20" rows="5">
+    {{discripe}}
+</textarea>
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    var purl = 'http://47.93.217.112:8080/jiekou';
+    var pp = 'http://192.168.0.106:8080/jiekou';
+    var sname;
+    var tell;
+    var address;
+    var disp;
+    var name;
+    apiready = function() {
+        var sname = $api.getStorage('sname');
+        //根据店铺店名查询所有的信息并且反馈在页面上面
+        api.ajax({
+            url: purl + '/slinfo.action',
+            method: 'post',
+            data: {
+                values: {
+                    seller_name: sname
+                },
+            }
+        }, function(ret, err) {
+            if (ret) {
+                sname = JSON.stringify(ret[0].seller_name);
+                //去掉双引号
+                sname = sname.substring(1, sname.length - 1);
+                tell = JSON.stringify(ret[0].seller_tell);
+                tell = tell.substring(1, tell.length - 1);
+                address = JSON.stringify(ret[0].seller_address);
+                address = address.substring(1, address.length - 1);
+                disp = JSON.stringify(ret[0].seller_discripe);
+                disp = disp.substring(1, disp.length - 1);
+                name = JSON.stringify(ret[0].seller_username);
+                name = name.substring(1, name.length - 1);
+                //给前台赋值
+                new Vue({
+                    el: '#tab',
+                    data: {
+                        name: name,
+                        tell: tell,
+                        address: address,
+                        discripe: disp,
+                        sname: sname
+                    }
+                });
+                //给前台赋值
+            }
+        });
+
+        //根据店铺店名查询所有的信息并且反馈在页面上面
+    }
+</script>
+
+</html>

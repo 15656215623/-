@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>我的-商家中心-全部宝贝</title>
+    <script src="../script/vue.js"></script>
+    <script src="../script/jquery-1.10.2.js"></script>
+    <script src="../script/api.js"></script>
+    <script src="../script/bootstrap.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+<style>
+    .table tr td {
+        border: 1px solid white;
+        white-space: nowrap;
+        /*控制单行显示*/
+        overflow: hidden;
+        /*超出隐藏*/
+        text-overflow: ellipsis;
+        /*隐藏的字符用省略号表示*/
+        -moz-text-overflow: ellipsis;
+    }
+</style>
+
+<body>
+    <!-- 宣传海报 -->
+    <div class="row">
+        <img src="../image/goods/allgoods.PNG" style="width:100%;" />
+    </div>
+    <!-- 宣传海报 -->
+    <!--  1/2浏览格式-->
+    <div class="container">
+        <div class="row" id="agood">
+            <div class="col-xs-6" v-for="s in sites">
+                <table class="table" style="table-layout:fixed;" @click="show_onegood(s.good_name)">
+                    <tr>
+                        <td> <img :src="s.goods_imgs[0]" style="width:100%;" /></td>
+                    </tr>
+                    <tr>
+                        <td class="h6">{{s.good_name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="h6"> 价格{{s.good_price}} 销量 {{s.good_num}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--  1/2浏览格式-->
+</body>
+<script>
+    var purl = 'http://47.93.217.112:8080/jiekou';
+    var pp = 'http://192.168.0.106:8080/jiekou';
+    var good = new Vue({
+        el: '#agood',
+        data: {
+            sites: []
+        },
+        methods: {
+            show_onegood(name) {
+                api.openFrame({
+                    name: 'lookpostgoods',
+                    url: './lookpostgoods.html',
+                    pageParam: {
+                        name: name
+                    },
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: api.winHeight - 70,
+                    }
+
+                });
+            }
+        }
+    })
+    apiready = function() {
+        queryall();
+    }
+
+    function queryall() {
+        //获取这个店铺的名称
+        var sname = $api.getStorage('sname');
+        api.ajax({
+            url: purl + '/qg.action',
+            method: 'post',
+            data: {
+                values: {
+                    goods_seller: sname
+                }
+            }
+        }, function(ret, err) {
+            if (ret) {
+                //把店铺的所有信息都显示在这个页面上面
+                good.sites = ret;
+                //把店铺的所有信息都显示在这个页面上面
+            }
+        });
+    }
+    //把goods_id传递到另一个商品详情的页面
+</script>
+
+</html>

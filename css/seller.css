@@ -1,0 +1,34 @@
+#seller {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin: 0px;
+}
+
+.sellimg {
+    width: 80px;
+    height: 80px;
+    border-radius: 0%;
+    border: 3px solid white;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+span {
+    margin-left: 14%;
+    margin-top: 3%;
+    font-size: 11px;
+}
+
+.small_icon {
+    width: 36px;
+    height: 36px;
+}
+
+#view {
+    width: 100%;
+    height: 40%;
+    position: relative;
+    margin-top: 10%;
+    background-color:#e3f1ed;;
+}

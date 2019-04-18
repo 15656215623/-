@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+	<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+	<title>共享农场-商家版本-商品发布成功页面</title>
+	<script src="../script/jquery-1.10.2.js"></script>
+	<script src="../script/bootstrap.js"></script>
+	<script src="../script/api.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+</head>
+
+<body>
+	<!-- 海报 -->
+	<img src="../image/goods/newgoods.PNG" style="width:100%;height:50%;" />
+	<!-- 海报 -->
+	<br><br>
+	<br><br>
+	<button type="button" class="btn btn-primary" onclick="window.location.href='addgoods.html'">继续发布宝贝</button>
+	<br><br>
+	<button type="button" class="btn btn-success" onclick="window.location.href='seller.html'">返回商家首页</button>
+	<br><br>
+	<button type="button" class="btn btn-info" onclick="lookgoods()">查看发布的宝贝</button>
+</body>
+<script>
+	apiready = function() {
+			var name = api.pageParam.name;
+		}
+		//根据宝贝的name来查看这个宝贝的详情
+	function lookgoods() {
+		api.openFrame({
+			name: 'lookpostgoods',
+			url: './lookpostgoods.html',
+			pageParam: {
+				name: name,
+			},
+		});
+	}
+</script>
+
+</html>
